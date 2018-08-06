@@ -1,0 +1,12 @@
+{
+    "name": "pedrommone/araneo",
+    "description": "Your own random proxy endpoint",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Pedro Maia",
+            "email": "pedrommone@gmail.com"
+        }
+    ],
+    "require": {}
+}
