@@ -28,4 +28,9 @@ class Proxy extends Model
     {
         return $query->whereLastStatus(Proxy::STATUS_WORKING);
     }
+
+    public function scopeRandom($query): Builder
+    {
+        return $query->inRandomOrder();
+    }
 }

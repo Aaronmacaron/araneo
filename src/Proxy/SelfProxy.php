@@ -17,8 +17,8 @@ class SelfProxy
     {
         $proxy = $this->proxy
             ->working()
+            ->random()
             ->where('proxy_source', '<>', $current)
-            ->inRandomOrder()
             ->first();
 
         if (!$proxy) {
