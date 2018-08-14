@@ -14,7 +14,7 @@ class BasicScheme extends Migration
             $table->ipAddress('ip_address');
             $table->string('country', 2);
             $table->string('protocol', 10);
-            $table->unsignedSmallInteger('port');
+            $table->unsignedInteger('port');
             $table->unsignedTinyInteger('anonymity_level');
 
             $table->boolean('supports_method_get');
@@ -24,8 +24,8 @@ class BasicScheme extends Migration
             $table->boolean('supports_user_agent');
             $table->boolean('supports_https');
 
-            $table->string('last_status', 10);
-            $table->timestamp('last_checked_at');
+            $table->string('last_status', 10)->default('new');
+            $table->timestamp('last_checked_at')->useCurrent();
 
             $table->timestamps();
         });
