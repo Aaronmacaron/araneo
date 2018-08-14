@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class GimmeProxyCommand extends Command
 {
     protected $signature = 'araneo:proxy:gimmeproxy';
-    protected $description = 'Fetch a random proxy using GimmeProxy';
+    protected $description = 'Fetch a random proxy using GimmeProxy.';
     protected $gimmeProxy;
     protected $proxy;
 

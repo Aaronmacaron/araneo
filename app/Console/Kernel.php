@@ -2,25 +2,24 @@
 
 namespace App\Console;
 
-use App\Console\Commands\Proxy\GimmeProxyCommand;
-use App\Console\Commands\Proxy\GetProxyListCommand;
-
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        GimmeProxyCommand::class,
-        GetProxyListCommand::class,
+        Commands\Check\LumCheckCommand::class,
+        Commands\Proxy\GetProxyListCommand::class,
+        Commands\Proxy\GimmeProxyCommand::class,
+        Commands\Test\LumTestCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(GimmeProxyCommand::class)
+        $schedule->command(Commands\Proxy\GimmeProxyCommand::class)
             ->everyTenMinutes();
 
-        $schedule->command(GetProxyListCommand::class)
+        $schedule->command(Commands\Proxy\GetProxyListCommand::class)
             ->everyTenMinutes();
     }
 }

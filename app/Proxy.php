@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proxy extends Model
 {
+    const STATUS_WORKING = 'working';
+    const STATUS_FAILED = 'failed';
+
     protected $fillable = [
         'ip_address', 'country', 'protocol', 'port', 'anonymity_level',
         'supports_method_get', 'supports_method_post', 'supports_cookies',

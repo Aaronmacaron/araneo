@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class GetProxyListCommand extends Command
 {
     protected $signature = 'araneo:proxy:getproxylist';
-    protected $description = 'Fetch a random proxy using GetProxyList';
+    protected $description = 'Fetch a random proxy using GetProxyList.';
     protected $getProxyList;
     protected $proxy;
 
