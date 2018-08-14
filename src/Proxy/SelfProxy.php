@@ -17,6 +17,7 @@ class SelfProxy
     {
         $proxy = $this->proxy
             ->working()
+            ->anonymous()
             ->random()
             ->where('proxy_source', '<>', $current)
             ->first();

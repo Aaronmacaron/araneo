@@ -48,6 +48,6 @@ class GimmeProxy implements SourceInterface
             ]);
         }
 
-        return [];
+        throw new \Exception('Cannot get a proxy this time.');
     }
 }

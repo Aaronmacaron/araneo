@@ -22,7 +22,7 @@ class ProxyController extends Controller
     public function random(Request $request): JsonResponse
     {
         $proxy = Proxy::random()->where($request->only([
-            'country', 'anonymity_level'
+            'country', 'anonymity_level', 'last_status'
         ]))->first();
 
         if ($proxy) {

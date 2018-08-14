@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proxy extends Model
 {
-    const STATUS_WORKING = 'working';
+    const ANONYMITY_LEVEL_HIGH = 2;
+    const ANONYMITY_LEVEL_LOW = 0;
+    const ANONYMITY_LEVEL_MEDIUM = 1;
     const STATUS_FAILED = 'failed';
+    const STATUS_WORKING = 'working';
 
     protected $fillable = [
         'ip_address', 'country', 'protocol', 'port', 'anonymity_level',
@@ -32,5 +35,10 @@ class Proxy extends Model
     public function scopeRandom($query): Builder
     {
         return $query->inRandomOrder();
+    }
+
+    public function scopeAnonymous($query): Builder
+    {
+        return $query->where('anonymity_level', '>=', self::ANONYMITY_LEVEL_MEDIUM);
     }
 }
