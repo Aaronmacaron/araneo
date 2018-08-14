@@ -13,6 +13,7 @@ use Illuminate\Log\Logger;
 class GetProxyList implements SourceInterface
 {
     const GETPROXYLIST_ENDPOINT = 'https://api.getproxylist.com/proxy';
+    const REQUEST_TIMEOUT = 30;
 
     protected $guzzle;
     protected $logger;
@@ -36,6 +37,7 @@ class GetProxyList implements SourceInterface
         try {
             $req = $this->guzzle->request('GET', self::GETPROXYLIST_ENDPOINT, [
                 RequestOptions::PROXY => $this->proxy->connection(ProxySource::GET_PROXY_LIST),
+                RequestOptions::TIMEOUT => self::REQUEST_TIMEOUT,
             ]);
 
             return $this->transformer->transform($req);
@@ -45,5 +47,7 @@ class GetProxyList implements SourceInterface
                 'payload' => (string) $exception->getResponse()->getBody(),
             ]);
         }
+
+        return [];
     }
 }

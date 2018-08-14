@@ -9,17 +9,17 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\Check\LumCheckCommand::class,
-        Commands\Proxy\GetProxyListCommand::class,
-        Commands\Proxy\GimmeProxyCommand::class,
+        Commands\Crawler\GetProxyListCommand::class,
+        Commands\Crawler\GimmeProxyCommand::class,
         Commands\Test\LumTestCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(Commands\Proxy\GimmeProxyCommand::class)
+        $schedule->command(Commands\Crawler\GimmeProxyCommand::class)
             ->everyTenMinutes();
 
-        $schedule->command(Commands\Proxy\GetProxyListCommand::class)
+        $schedule->command(Commands\Crawler\GetProxyListCommand::class)
             ->everyTenMinutes();
     }
 }

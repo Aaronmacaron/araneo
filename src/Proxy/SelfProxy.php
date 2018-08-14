@@ -16,6 +16,7 @@ class SelfProxy
     public function connection(string $current)
     {
         $proxy = $this->proxy
+            ->working()
             ->where('proxy_source', '<>', $current)
             ->inRandomOrder()
             ->first();

@@ -13,6 +13,7 @@ use Illuminate\Log\Logger;
 class GimmeProxy implements SourceInterface
 {
     const GIMMEPROXY_ENDPOINT = 'https://gimmeproxy.com/api/getProxy';
+    const REQUEST_TIMEOUT = 30;
 
     protected $guzzle;
     protected $logger;
@@ -35,7 +36,8 @@ class GimmeProxy implements SourceInterface
     {
         try {
             $req = $this->guzzle->request('GET', self::GIMMEPROXY_ENDPOINT, [
-                RequestOptions::PROXY => $this->proxy->connection(ProxySource::GIMME_PROXY)
+                RequestOptions::PROXY => $this->proxy->connection(ProxySource::GIMME_PROXY),
+                RequestOptions::TIMEOUT => self::REQUEST_TIMEOUT,
             ]);
 
             return $this->transformer->transform($req);
@@ -45,5 +47,7 @@ class GimmeProxy implements SourceInterface
                 'payload' => (string) $exception->getResponse()->getBody(),
             ]);
         }
+
+        return [];
     }
 }

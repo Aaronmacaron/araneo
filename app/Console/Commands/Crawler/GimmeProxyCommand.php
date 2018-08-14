@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Proxy;
+namespace App\Console\Commands\Crawler;
 
 use App\Proxy;
 use Araneo\Sources\GimmeProxy\GimmeProxy;
@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class GimmeProxyCommand extends Command
 {
-    protected $signature = 'araneo:proxy:gimmeproxy';
+    protected $signature = 'araneo:crawler:gimmeproxy {repeat=1}';
     protected $description = 'Fetch a random proxy using GimmeProxy.';
     protected $gimmeProxy;
     protected $proxy;
@@ -23,18 +23,25 @@ class GimmeProxyCommand extends Command
 
     public function handle()
     {
+        $repeat = $this->argument('repeat');
+
         $this->info('Trying to fetch data from GimmeProxy.');
+        $this->info(sprintf('Repeating this procedure for %s times', $repeat));
 
-        $proxy = $this->gimmeProxy->random();
-
-        if (!$this->proxy->create($proxy)) {
-            $this->error('Error while saving proxy.');
-
-            return false;
+        foreach (range(1, $repeat) as $row) {
+            $this->crawler();
         }
+    }
 
-        $this->info('Successfully stored proxy.');
+    private function crawler()
+    {
+        try {
+            $proxy = $this->gimmeProxy->random();
+            $this->proxy->create($proxy);
 
-        return true;
+            $this->info('Successfully stored proxy.');
+        } catch (\Exception $exception) {
+            $this->error('Error while saving proxy.');
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Proxy extends Model
@@ -21,5 +22,10 @@ class Proxy extends Model
     public function getConnectionAttribute(): string
     {
         return sprintf('%s://%s:%s', $this->protocol, $this->ip_address, $this->port);
+    }
+
+    public function scopeWorking($query): Builder
+    {
+        return $query->whereLastStatus(Proxy::STATUS_WORKING);
     }
 }
