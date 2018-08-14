@@ -3,7 +3,7 @@
 namespace Araneo\Sources\GimmeProxy;
 
 use Araneo\Contracts\SourceTransformerInterface;
-use Carbon\Carbon;
+use Araneo\Sources\ProxySource;
 use GuzzleHttp\Psr7\Response;
 
 class Transformer implements SourceTransformerInterface
@@ -18,7 +18,9 @@ class Transformer implements SourceTransformerInterface
             'ip_address' => $payload->ip,
             'port' => (int) $payload->port,
             'protocol' => $payload->protocol,
+            'proxy_source' => ProxySource::GIMME_PROXY,
             'supports_cookies' => (bool) $payload->cookies,
+            'supports_custom_headers' => false,
             'supports_https' => (bool) $payload->supportsHttps,
             'supports_method_get' => (bool) $payload->get,
             'supports_method_post' => (bool) $payload->post,

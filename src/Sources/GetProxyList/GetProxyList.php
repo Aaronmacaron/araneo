@@ -1,15 +1,15 @@
 <?php
 
-namespace Araneo\Sources\GimmeProxy;
+namespace Araneo\Sources\GetProxyList;
 
 use Araneo\Contracts\SourceInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Log\Logger;
 
-class GimmeProxy implements SourceInterface
+class GetProxyList implements SourceInterface
 {
-    const GIMMEPROXY_ENDPOINT = 'https://gimmeproxy.com/api/getProxy';
+    const GETPROXYLIST_ENDPOINT = 'https://api.getproxylist.com/proxy';
 
     protected $guzzle;
     protected $logger;
@@ -25,7 +25,7 @@ class GimmeProxy implements SourceInterface
     public function random(): array
     {
         try {
-            $req = $this->guzzle->request('GET', self::GIMMEPROXY_ENDPOINT);
+            $req = $this->guzzle->request('GET', self::GETPROXYLIST_ENDPOINT);
 
             return $this->transformer->transform($req);
         } catch (ClientException $exception) {
