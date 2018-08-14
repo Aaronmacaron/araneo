@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "027ca829cfa893599294c2cc8a0be802",
+    "content-hash": "261e4c908aaf6b953f9befdb95db9402",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1276,6 +1276,54 @@
             "description": "The Illuminate View package.",
             "homepage": "https://laravel.com",
             "time": "2018-07-19T23:06:53+00:00"
+        },
+        {
+            "name": "itsdamien/laravel-heroku-config-parser",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itsDamien/laravel-heroku-config-parser.git",
+                "reference": "b8dfd063c1b43301e5303b71fefde1a132b9cddf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itsDamien/laravel-heroku-config-parser/zipball/b8dfd063c1b43301e5303b71fefde1a132b9cddf",
+                "reference": "b8dfd063c1b43301e5303b71fefde1a132b9cddf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.7",
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ItsDamien\\Heroku\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damien Criado",
+                    "email": "damien@itsdamien.com"
+                }
+            ],
+            "description": "Parse Heroku config vars like DATABASE_URL or REDIS_URL to work with Laravel.",
+            "keywords": [
+                "database",
+                "env",
+                "heroku",
+                "laravel",
+                "redis"
+            ],
+            "time": "2017-08-23T15:37:23+00:00"
         },
         {
             "name": "laravel/lumen-framework",
