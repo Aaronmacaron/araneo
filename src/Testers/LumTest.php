@@ -11,7 +11,7 @@ class LumTest
 {
     const HTTP_CODE_OK = 200;
     const LUMTEST_ENDPOINT = 'https://lumtest.com/myip.json';
-    const REQUEST_TIMEOUT = 30;
+    const REQUEST_TIMEOUT = 5;
 
     protected $client;
     protected $logger;
