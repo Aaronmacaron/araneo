@@ -25,7 +25,7 @@ class LumCheckCommand extends Command
         $minutes = $this->argument('minutes');
         $acceptableTTL = Carbon::now()->subMinutes($minutes);
 
-        $this->info(sprintf('Searching for proxies with last checked at below %s.', $acceptableTTL));
+        $this->info(sprintf('Searching for proxies with last checked at is higher than %s.', $acceptableTTL));
 
         $proxies = $this->proxy
             ->whereDate('last_checked_at', '>=', $acceptableTTL)

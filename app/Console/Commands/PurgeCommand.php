@@ -24,7 +24,7 @@ class PurgeCommand extends Command
         $hours = $this->argument('hours');
         $acceptableTTL = Carbon::now()->subHour($hours);
 
-        $this->info(sprintf('Searching for proxies with last working at below %s.', $acceptableTTL));
+        $this->info(sprintf('Searching for proxies with last working at is higher than %s.', $acceptableTTL));
 
         $proxies = $this->proxy
             ->whereDate('last_worked_at', '>=', $acceptableTTL)
