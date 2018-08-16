@@ -9,9 +9,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProxyController extends Controller
 {
-    public function list(): JsonResponse
+    private $searchable = [
+        'country', 'protocol', 'port', 'anonymity_level', 'supports_method_get',
+        'supports_method_post', 'supports_cookies', 'supports_referer', 'supports_user_agent',
+        'supports_https', 'supports_custom_headers', 'last_status',
+    ];
+
+    public function list(Request $request): JsonResponse
     {
-        return response()->json(Proxy::all());
+        $proxies = Proxy::orderBy('created_at')
+            ->where($request->only($this->searchable))
+            ->paginate(20);
+
+        return response()->json($proxies);
     }
 
     public function get(int $id): JsonResponse
@@ -21,9 +31,9 @@ class ProxyController extends Controller
 
     public function random(Request $request): JsonResponse
     {
-        $proxy = Proxy::random()->where($request->only([
-            'country', 'anonymity_level', 'last_status'
-        ]))->first();
+        $proxy = Proxy::random()
+            ->where($request->only($this->searchable))
+            ->first();
 
         if ($proxy) {
             return response()->json($proxy);
