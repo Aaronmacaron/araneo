@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Proxy;
 use Araneo\Testers\LumTest;
-use Carbon\Carbon;
 use Illuminate\Log\Logger;
 
 class LumCheckJob extends Job
@@ -20,15 +19,7 @@ class LumCheckJob extends Job
     {
         $logger->info('Checking proxy.');
 
-        $proxy = $this->proxy;
-        $proxy->last_status = Proxy::STATUS_FAILED;
-
-        if ($lumTest->test($proxy)) {
-            $proxy->last_status = Proxy::STATUS_WORKING;
-        }
-
-        $proxy->last_checked_at = Carbon::now();
-        $proxy->save();
+        $lumTest->testAndSave($this->proxy);
 
         $logger->info('Proxy has been checked.');
     }
