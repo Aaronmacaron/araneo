@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
         Commands\Check\LumCheckCommand::class,
         Commands\Crawler\GetProxyListCommand::class,
         Commands\Crawler\GimmeProxyCommand::class,
+        Commands\PurgeCommand::class,
         Commands\Test\LumTestCommand::class,
     ];
 
