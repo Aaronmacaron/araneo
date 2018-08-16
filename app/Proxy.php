@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ProxyCreatedEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,10 @@ class Proxy extends Model
     ];
 
     protected $appends = ['connection'];
+
+    protected $dispatchesEvents = [
+        'created' => ProxyCreatedEvent::class,
+    ];
 
     public function getConnectionAttribute(): string
     {
