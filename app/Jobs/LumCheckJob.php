@@ -4,37 +4,28 @@ namespace App\Jobs;
 
 use App\Proxy;
 use Araneo\Testers\LumTest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
 
 class LumCheckJob extends Job
 {
-    protected $proxy;
+    protected $proxies;
 
-    public function __construct(Proxy $proxy)
+    public function __construct(Collection $proxies)
     {
-        $this->proxy = $proxy;
+        $this->proxies = $proxies;
     }
 
     public function handle(Logger $logger, LumTest $lumTest)
     {
-        $logger->info('Checking proxy.', [
-            'proxy_id' => $this->proxy->id,
+        $logger->info('Checking for proxies.', [
+            'count' => $this->proxies->count(),
         ]);
 
-        $lumTest->testAndSave($this->proxy);
+        $lumTest->testAndSaveBatch($this->proxies);
 
-        $logger->info('Proxy has been checked.', [
-            'proxy_id' => $this->proxy->id,
+        $logger->info('All proxies have been checked.', [
+            'count' => $this->proxies->count(),
         ]);
-    }
-
-    public function failed(\Exception $exception, Logger $logger)
-    {
-        $logger->error('Failed to run LumCheck.', [
-            'exception' => $exception->getMessage(),
-        ]);
-
-        $this->proxy->status = Proxy::STATUS_FAILED;
-        $this->proxy->save();
     }
 }

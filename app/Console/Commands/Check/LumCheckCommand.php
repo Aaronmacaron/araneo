@@ -9,6 +9,8 @@ use Illuminate\Console\Command;
 
 class LumCheckCommand extends Command
 {
+    const BATCH_SIZE = 10;
+
     protected $signature = 'araneo:check:lumtest {minutes}';
     protected $description = 'Test all proxies by a given amount of time.';
     protected $proxy;
@@ -32,9 +34,10 @@ class LumCheckCommand extends Command
             ->get();
 
         $this->info(sprintf('Found %s proxies.', $proxies->count()));
+        $this->info(sprintf('Using thunks of %s.', self::BATCH_SIZE));
 
-        foreach ($proxies as $proxy) {
-            dispatch(new LumCheckJob($proxy));
+        foreach ($proxies->chunk(self::BATCH_SIZE) as $batch) {
+            dispatch(new LumCheckJob($batch));
         }
 
         $this->info('Job is done.');

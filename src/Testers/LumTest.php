@@ -5,7 +5,11 @@ namespace Araneo\Testers;
 use App\Proxy;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Pool;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
 
 class LumTest
@@ -27,7 +31,7 @@ class LumTest
     {
         $proxy->last_status = Proxy::STATUS_FAILED;
 
-        if ($this->request($proxy->connection)) {
+        if ($this->singleRequest($proxy->connection)) {
             $proxy->last_status = Proxy::STATUS_WORKING;
             $proxy->last_worked_at = Carbon::now();
         }
@@ -36,7 +40,49 @@ class LumTest
         $proxy->save();
     }
 
-    public function request(string $proxy): bool
+    public function testAndSaveBatch(Collection $proxies)
+    {
+        $requests = function ($proxies) {
+            for ($i = 0; $i < count($proxies); $i++) {
+                yield function () use ($proxies, $i) {
+                    return $this->client->requestAsync('GET', self::LUMTEST_ENDPOINT, $this->requestOptions($proxies[$i]));
+                };
+            }
+        };
+
+        $pool = new Pool($this->client, $requests($proxies), [
+            'concurrency' => $proxies->count(),
+            'fulfilled' => function (Response $response, int $index) use ($proxies) {
+                $proxy = $proxies[$index];
+
+                $proxy->last_status = Proxy::STATUS_WORKING;
+                $proxy->last_checked_at = Carbon::now();
+                $proxy->save();
+
+                $this->logger->info('Proxy worked!', [
+                    'proxy_id' => $proxy->id,
+                    'response' => (string) $response->getBody(),
+                ]);
+            },
+            'rejected' => function (TransferException $exception, int $index) use ($proxies) {
+                $proxy = $proxies[$index];
+
+                $proxy->last_status = Proxy::STATUS_FAILED;
+                $proxy->last_checked_at = Carbon::now();
+                $proxy->save();
+
+                $this->logger->info('Proxy failed!', [
+                    'proxy_id' => $proxy->id,
+                    'exception' => $exception->getMessage(),
+                ]);
+            },
+        ]);
+
+        $promise = $pool->promise();
+        $promise->wait();
+    }
+
+    private function singleRequest(string $proxy): bool
     {
         try {
             $req = $this->client->request('GET', self::LUMTEST_ENDPOINT, [
@@ -47,7 +93,15 @@ class LumTest
         } catch (\Exception $exception) {
             return false;
         }
-
         return $req->getStatusCode() === self::HTTP_CODE_OK;
+    }
+
+    private function requestOptions(Proxy $proxy): array
+    {
+        return [
+            RequestOptions::HTTP_ERRORS => false,
+            RequestOptions::PROXY => $proxy->connection,
+            RequestOptions::TIMEOUT => self::REQUEST_TIMEOUT,
+        ];
     }
 }
