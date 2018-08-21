@@ -18,6 +18,12 @@ class LumCheckJob extends Job
 
     public function handle(Logger $logger, LumTest $lumTest)
     {
+        if (!$this->proxies) {
+            $logger->info('There are no proxies to check.');
+
+            return false;
+        }
+
         $logger->info('Checking for proxies.', [
             'count' => $this->proxies->count(),
         ]);
