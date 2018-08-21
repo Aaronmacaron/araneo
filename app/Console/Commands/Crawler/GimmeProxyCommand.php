@@ -37,7 +37,7 @@ class GimmeProxyCommand extends Command
     {
         try {
             $proxy = $this->gimmeProxy->random();
-            $this->proxy->create($proxy);
+            $this->proxy->updateOrCreate(['ip_address' => $proxy['ip_address']], $proxy);
 
             $this->info('Successfully stored proxy.');
         } catch (\Exception $exception) {
