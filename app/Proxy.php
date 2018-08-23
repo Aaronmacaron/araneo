@@ -5,9 +5,13 @@ namespace App;
 use App\Events\ProxyCreatedEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Jedrzej\Searchable\SearchableTrait;
+use Jedrzej\Sortable\SortableTrait;
 
 class Proxy extends Model
 {
+    use SearchableTrait, SortableTrait;
+
     const ANONYMITY_LEVEL_HIGH = 2;
     const ANONYMITY_LEVEL_LOW = 0;
     const ANONYMITY_LEVEL_MEDIUM = 1;
@@ -21,11 +25,29 @@ class Proxy extends Model
         'supports_custom_headers', 'proxy_source',
     ];
 
+    protected $searchableAndSortableFields = [
+        'ip_address', 'country', 'protocol', 'port', 'anonymity_level',
+        'supports_method_get', 'supports_method_post', 'supports_cookies',
+        'supports_referer', 'supports_user_agent', 'supports_https',
+        'supports_custom_headers', 'proxy_source', 'last_status',
+        'last_checked_at', 'last_worked_at',
+    ];
+
     protected $appends = ['connection'];
 
     protected $dispatchesEvents = [
         'created' => ProxyCreatedEvent::class,
     ];
+
+    public function getSortableAttributes(): array
+    {
+        return $this->searchableAndSortableFields;
+    }
+
+    public function getSearchableAttributes(): array
+    {
+        return $this->searchableAndSortableFields;
+    }
 
     public function getConnectionAttribute(): string
     {
