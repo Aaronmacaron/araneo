@@ -82,7 +82,7 @@ class LumTest
         $promise->wait();
     }
 
-    private function singleRequest(string $proxy): bool
+    public function singleRequest(string $proxy): bool
     {
         try {
             $req = $this->client->request('GET', self::LUMTEST_ENDPOINT, [
@@ -96,7 +96,7 @@ class LumTest
         return $req->getStatusCode() === self::HTTP_CODE_OK;
     }
 
-    private function requestOptions(Proxy $proxy): array
+    public function requestOptions(Proxy $proxy): array
     {
         return [
             RequestOptions::HTTP_ERRORS => false,

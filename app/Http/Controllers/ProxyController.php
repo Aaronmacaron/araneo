@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Proxy;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProxyController extends Controller
@@ -30,10 +29,10 @@ class ProxyController extends Controller
             ->filtered()
             ->first();
 
-        if ($proxy) {
-            return response()->json($proxy);
+        if (!$proxy) {
+            throw new NotFoundHttpException("There are no proxies that match your query.");
         }
 
-        throw new NotFoundHttpException("There are no proxies that match your query.");
+        return response()->json($proxy);
     }
 }

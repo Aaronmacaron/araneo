@@ -28,7 +28,7 @@ class LumTestCommand extends Command
 
         $this->info(sprintf('Trying to test proxy #%s against LumTest.', $proxy->id));
 
-        if (!$this->lumTest->request($proxy)) {
+        if (!$this->lumTest->singleRequest($proxy)) {
             $this->error('Proxy is not working.');
 
             return false;

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\ProxyCreatedEvent;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
@@ -67,5 +68,10 @@ class Proxy extends Model
     public function scopeAnonymous($query): Builder
     {
         return $query->where('anonymity_level', '>=', self::ANONYMITY_LEVEL_MEDIUM);
+    }
+
+    public function scopeRecent($query, int $ttl): Builder
+    {
+        return $query->whereDate('last_checked_at', '>', Carbon::now()->subHours($ttl));
     }
 }
