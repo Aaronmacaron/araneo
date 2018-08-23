@@ -30,7 +30,7 @@ class LumCheckCommand extends Command
         $this->info(sprintf('Searching for proxies with last checked at is higher than %s.', $acceptableTTL));
 
         $proxies = $this->proxy
-            ->whereDate('last_checked_at', '>=', $acceptableTTL)
+            ->whereDate('last_checked_at', '<=', $acceptableTTL)
             ->get();
 
         $this->info(sprintf('Found %s proxies.', $proxies->count()));
