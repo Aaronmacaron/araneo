@@ -57,6 +57,7 @@ class LumTest
 
                 $proxy->last_status = Proxy::STATUS_WORKING;
                 $proxy->last_checked_at = Carbon::now();
+                $proxy->last_worked_at = Carbon::now();
                 $proxy->save();
 
                 $this->logger->info('Proxy worked!', [
