@@ -12,6 +12,8 @@ class ProxyCreatedListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
+    public $queue = 'high';
+
     protected $logger;
     protected $test;
 

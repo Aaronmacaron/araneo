@@ -43,7 +43,7 @@ services:
   queue:
     image: ambientum/php:7.1
     container_name: araneo-queue
-    command: php artisan queue:listen
+    command: php artisan queue:listen --queue=high,low
     volumes:
       - .:/var/www/app
     links:

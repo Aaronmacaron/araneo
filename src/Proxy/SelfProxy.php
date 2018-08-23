@@ -16,7 +16,7 @@ class SelfProxy
     public function connection(string $current)
     {
         $proxy = $this->proxy
-            ->recent(10)
+            ->recent(60)
             ->working()
             ->anonymous()
             ->random()
