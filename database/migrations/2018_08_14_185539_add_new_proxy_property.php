@@ -9,7 +9,7 @@ class AddNewProxyProperty extends Migration
     public function up()
     {
         Schema::table('proxies', function (Blueprint $table) {
-            $table->boolean('supports_custom_headers')->default('false');
+            $table->boolean('supports_custom_headers')->default(0);
         });
     }
 
