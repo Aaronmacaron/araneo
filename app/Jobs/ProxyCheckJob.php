@@ -2,9 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Proxy;
-use Araneo\Contracts\TesterInterface;
-use Araneo\Testers\LumTest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
 

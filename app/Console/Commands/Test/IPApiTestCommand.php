@@ -4,7 +4,6 @@ namespace App\Console\Commands\Test;
 
 use App\Proxy;
 use Araneo\Testers\IPApiTest;
-use Araneo\Testers\LumTest;
 use Illuminate\Console\Command;
 
 class IPApiTestCommand extends Command
