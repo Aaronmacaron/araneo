@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
         Commands\Check\IPApiCheckCommand::class,
         Commands\Check\LumCheckCommand::class,
         Commands\Crawler\FreeProxyListCommand::class,
+        Commands\Crawler\FreeProxyListsCommand::class,
         Commands\Crawler\GetProxyListCommand::class,
         Commands\Crawler\GimmeProxyCommand::class,
         Commands\PurgeCommand::class,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Araneo\Sources\FreeProxyList;
+namespace Araneo\Sources\FreeProxyLists;
 
 use Araneo\Contracts\SourceInterface;
 use Araneo\Proxy\SelfProxy;
@@ -11,9 +11,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Log\Logger;
 
-class FreeProxyList implements SourceInterface
+class FreeProxyLists implements SourceInterface
 {
-    const FREEPROXYLIST_ENDPOINT = 'http://free-proxy-list.net/';
+    const FREEPROXYLISTS_ENDPOINT = 'http://freeproxylists.net/?s=u';
     const REQUEST_TIMEOUT = 30;
 
     protected $guzzle;
@@ -41,8 +41,8 @@ class FreeProxyList implements SourceInterface
     public function list(): array
     {
         try {
-            $req = $this->guzzle->request('GET', self::FREEPROXYLIST_ENDPOINT, [
-                RequestOptions::PROXY => $this->proxy->connection(ProxySource::FREE_PROXY_LIST),
+            $req = $this->guzzle->request('GET', self::FREEPROXYLISTS_ENDPOINT, [
+                RequestOptions::PROXY => $this->proxy->connection(ProxySource::FREE_PROXY_LISTS),
                 RequestOptions::TIMEOUT => self::REQUEST_TIMEOUT,
                 RequestOptions::HEADERS => [
                     'Accept-Language' => 'en-US,en;q=0.9,pt;q=0.8',
