@@ -4,6 +4,7 @@ namespace Araneo\Sources;
 
 class ProxySource
 {
-    const GIMME_PROXY = 'gimmeproxy';
+    const FREE_PROXY_LIST = 'freeproxylist';
     const GET_PROXY_LIST = 'getproxylist';
+    const GIMME_PROXY = 'gimmeproxy';
 }
