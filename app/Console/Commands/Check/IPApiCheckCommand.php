@@ -4,17 +4,17 @@ namespace App\Console\Commands\Check;
 
 use App\Jobs\ProxyCheckJob;
 use App\Proxy;
-use Araneo\Testers\LumTest;
+use Araneo\Testers\IPApiTest;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class LumCheckCommand extends Command
+class IPApiCheckCommand extends Command
 {
     const BATCH_SIZE = 10;
 
     protected $description = 'Test all proxies by a given amount of time.';
     protected $proxy;
-    protected $signature = 'araneo:check:lumtest {minutes}';
+    protected $signature = 'araneo:check:ipapi {minutes}';
 
     public function __construct(Proxy $proxy)
     {
@@ -38,7 +38,7 @@ class LumCheckCommand extends Command
         $this->info(sprintf('Using thunks of %s.', self::BATCH_SIZE));
 
         foreach ($proxies->chunk(self::BATCH_SIZE) as $batch) {
-            dispatch(new ProxyCheckJob($batch, LumTest::class));
+            dispatch(new ProxyCheckJob($batch, IPApiTest::class));
         }
 
         $this->info('Job is done.');

@@ -14,10 +14,10 @@ use GuzzleHttp\RequestOptions;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
 
-class LumTest implements TesterInterface
+class IPApiTest implements TesterInterface
 {
     const HTTP_CODE_OK = 200;
-    const LUMTEST_ENDPOINT = 'https://lumtest.com/myip.json';
+    const LUMTEST_ENDPOINT = 'https://ipapi.co/json';
     const REQUEST_TIMEOUT = 5;
 
     protected $client;
@@ -98,6 +98,7 @@ class LumTest implements TesterInterface
         } catch (\Exception $exception) {
             return false;
         }
+
         return $req->getStatusCode() === self::HTTP_CODE_OK;
     }
 

@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\ProxyCreatedEvent;
-use Araneo\Testers\LumTest;
+use Araneo\Testers\IPApiTest;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Log\Logger;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ProxyCreatedListener implements ShouldQueue
 {
@@ -17,7 +17,7 @@ class ProxyCreatedListener implements ShouldQueue
     protected $logger;
     protected $test;
 
-    public function __construct(Logger $logger, LumTest $test)
+    public function __construct(Logger $logger, IPApiTest $test)
     {
         $this->logger = $logger;
         $this->test = $test;

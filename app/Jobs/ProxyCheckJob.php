@@ -3,20 +3,23 @@
 namespace App\Jobs;
 
 use App\Proxy;
+use Araneo\Contracts\TesterInterface;
 use Araneo\Testers\LumTest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
 
-class LumCheckJob extends Job
+class ProxyCheckJob extends Job
 {
     protected $proxies;
+    protected $tester;
 
-    public function __construct(Collection $proxies)
+    public function __construct(Collection $proxies, string $tester)
     {
         $this->proxies = $proxies;
+        $this->tester = $tester;
     }
 
-    public function handle(Logger $logger, LumTest $lumTest)
+    public function handle(Logger $logger)
     {
         if (!$this->proxies) {
             $logger->info('There are no proxies to check.');
@@ -28,7 +31,7 @@ class LumCheckJob extends Job
             'count' => $this->proxies->count(),
         ]);
 
-        $lumTest->testAndSaveBatch($this->proxies);
+        app($this->tester)->testAndSaveBatch($this->proxies);
 
         $logger->info('All proxies have been checked.', [
             'count' => $this->proxies->count(),
