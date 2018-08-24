@@ -7,7 +7,12 @@ class DeleteDuplicatedItems extends Migration
 {
     public function up()
     {
-        DB::statement("DELETE FROM proxies a USING proxies b WHERE a.id > b.id AND a.ip_address = b.ip_address");
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+
+        if ($driver === 'pgsql') {
+            DB::statement("DELETE FROM proxies a USING proxies b WHERE a.id > b.id AND a.ip_address = b.ip_address");
+        }
     }
 
     /**
