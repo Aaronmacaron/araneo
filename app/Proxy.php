@@ -36,6 +36,10 @@ class Proxy extends Model
 
     protected $appends = ['connection'];
 
+    protected $dates = [
+        'last_worked_at', 'last_worked_at',
+    ];
+
     protected $dispatchesEvents = [
         'created' => ProxyCreatedEvent::class,
     ];
