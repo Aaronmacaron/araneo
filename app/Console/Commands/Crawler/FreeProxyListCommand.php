@@ -32,7 +32,9 @@ class FreeProxyListCommand extends Command
         $this->info(sprintf('Found %s proxies from provider.', count($proxies)));
 
         if (count($proxies) === 0) {
-            throw new \Exception('Cannot find any proxy.');
+            $this->info('Cannot find any proxy!');
+
+            return true;
         }
 
         foreach ($proxies as $proxy) {
