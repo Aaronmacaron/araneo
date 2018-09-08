@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\EmptyQueryProxyException;
 use App\Proxy;
 use Araneo\Services\IdempotencyService;
 use Illuminate\Http\JsonResponse;
@@ -36,14 +37,14 @@ class ProxyController extends Controller
 
     public function random(Request $request): JsonResponse
     {
-        $proxy = $this->idempotency->lock($request, function (Proxy $proxy) {
-            return $proxy->random()->filtered()->first();
-        });
+        try {
+            $proxy = $this->idempotency->lock($request, function (Proxy $proxy) {
+                return $proxy->random()->filtered()->first();
+            });
 
-        if (!$proxy) {
+            return response()->json($proxy);
+        } catch (EmptyQueryProxyException $exception) {
             throw new NotFoundHttpException("There are no proxies that match your query.");
         }
-
-        return response()->json($proxy);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Araneo\Services;
 
+use App\Exceptions\EmptyQueryProxyException;
 use App\Proxy;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
@@ -37,14 +38,25 @@ class IdempotencyService
             return $this->lockAndReturn($header, $cb);
         }
 
-        return $cb($this->proxy);
+        return $this->query($cb);
     }
 
     private function lockAndReturn(string $header, callable $cb): Proxy
     {
-        $proxy = $cb($this->proxy);
+        $proxy = $this->query($cb);
 
         $this->cache->put($header, $proxy->id, self::IDEMPOTENCY_TTL);
+
+        return $proxy;
+    }
+
+    private function query(callable $cb): Proxy
+    {
+        $proxy = $cb($this->proxy);
+
+        if (is_null($proxy)) {
+            throw new EmptyQueryProxyException();
+        }
 
         return $proxy;
     }
