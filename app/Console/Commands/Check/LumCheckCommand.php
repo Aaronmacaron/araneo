@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class LumCheckCommand extends Command
 {
-    const BATCH_SIZE = 500;
+    const BATCH_SIZE = 5;
 
     protected $description = 'Test all proxies by a given amount of time.';
     protected $proxy;
