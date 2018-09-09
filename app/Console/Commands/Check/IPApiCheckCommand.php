@@ -32,6 +32,7 @@ class IPApiCheckCommand extends Command
 
         $proxies = $this->proxy
             ->whereDate('last_checked_at', '<=', $acceptableTTL)
+            ->orWhereNull('last_checked_at')
             ->get();
 
         $this->info(sprintf('Found %s proxies.', $proxies->count()));
