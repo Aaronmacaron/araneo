@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class IPApiCheckCommand extends Command
 {
-    const BATCH_SIZE = 10;
+    const BATCH_SIZE = 500;
 
     protected $description = 'Test all proxies by a given amount of time.';
     protected $proxy;
@@ -38,7 +38,10 @@ class IPApiCheckCommand extends Command
         $this->info(sprintf('Found %s proxies.', $proxies->count()));
         $this->info(sprintf('Using thunks of %s.', self::BATCH_SIZE));
 
-        foreach ($proxies->chunk(self::BATCH_SIZE) as $batch) {
+        foreach ($proxies->chunk(self::BATCH_SIZE) as $index => $batch) {
+            $current = ($index + 1) * self::BATCH_SIZE;
+            $this->info(sprintf('Dispatch\'d %s of %s', $current,  $proxies->count()));
+
             dispatch(new ProxyCheckJob($batch, IPApiTest::class));
         }
 
