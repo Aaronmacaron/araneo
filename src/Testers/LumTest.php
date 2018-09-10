@@ -16,8 +16,7 @@ use Illuminate\Log\Logger;
 class LumTest implements TesterInterface
 {
     const HTTP_CODE_OK = 200;
-    const LUMTEST_ENDPOINT = 'https://lumtest.com/myip.json';
-    const REQUEST_TIMEOUT = 5;
+    const REQUEST_TIMEOUT = 20;
 
     protected $client;
     protected $logger;
