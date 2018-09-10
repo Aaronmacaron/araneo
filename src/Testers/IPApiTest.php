@@ -16,7 +16,7 @@ use Illuminate\Log\Logger;
 class IPApiTest implements TesterInterface
 {
     const HTTP_CODE_OK = 200;
-    const LUMTEST_ENDPOINT = 'https://ipapi.co/json';
+    const IPAPI_ENDPOINT = 'https://ipapi.co/json';
     const REQUEST_TIMEOUT = 5;
 
     protected $client;
@@ -47,7 +47,7 @@ class IPApiTest implements TesterInterface
         $requests = function ($proxies) {
             for ($i = 0; $i < count($proxies); $i++) {
                 yield function () use ($proxies, $i) {
-                    return $this->client->requestAsync('GET', self::LUMTEST_ENDPOINT, $this->requestOptions($proxies[$i]));
+                    return $this->client->requestAsync('GET', self::IPAPI_ENDPOINT, $this->requestOptions($proxies[$i]));
                 };
             }
         };
@@ -89,7 +89,7 @@ class IPApiTest implements TesterInterface
     public function singleRequest(string $proxy): bool
     {
         try {
-            $req = $this->client->request('GET', self::LUMTEST_ENDPOINT, [
+            $req = $this->client->request('GET', self::IPAPI_ENDPOINT, [
                 RequestOptions::HTTP_ERRORS => false,
                 RequestOptions::PROXY => $proxy,
                 RequestOptions::TIMEOUT => self::REQUEST_TIMEOUT,
