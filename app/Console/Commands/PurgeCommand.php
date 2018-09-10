@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Proxy;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 
 class PurgeCommand extends Command
 {
@@ -24,11 +25,17 @@ class PurgeCommand extends Command
         $hours = $this->argument('hours');
         $acceptableTTL = Carbon::now()->subHour($hours);
 
-        $this->info(sprintf('Searching for proxies with last working at is higher than %s.', $acceptableTTL));
+        $this->info(sprintf('Searching for proxies with last working at is lower than %s.', $acceptableTTL));
 
         $proxies = $this->proxy
-            ->whereDate('last_worked_at', '>=', $acceptableTTL)
-            ->whereLastStatus(Proxy::STATUS_FAILED)
+            ->where(function (Builder $query) use ($acceptableTTL) {
+                $query->whereDate('last_worked_at', '<=', $acceptableTTL)
+                    ->whereLastStatus(Proxy::STATUS_FAILED);
+            })
+            ->orWhere(function (Builder $query) use ($acceptableTTL) {
+                $query->whereNull('last_worked_at')
+                    ->whereDate('created_at', '<=', $acceptableTTL);
+            })
             ->get();
 
         $this->info(sprintf('Found %s proxies.', $proxies->count()));
