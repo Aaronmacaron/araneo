@@ -42,7 +42,7 @@ class LumCheckCommand extends Command
             $current = ($index + 1) * self::BATCH_SIZE;
             $this->info(sprintf('Dispatch\'d %s of %s', $current,  $proxies->count()));
 
-            dispatch(new ProxyCheckJob($batch, LumTest::class));
+            dispatch(new ProxyCheckJob($batch->pluck('id'), LumTest::class));
         }
 
         $this->info('Job is done.');

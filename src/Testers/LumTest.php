@@ -10,8 +10,8 @@ use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Log\Logger;
+use Illuminate\Support\Collection;
 
 class LumTest implements TesterInterface
 {
@@ -21,11 +21,13 @@ class LumTest implements TesterInterface
 
     protected $client;
     protected $logger;
+    protected $proxy;
 
-    public function __construct(Client $client, Logger $logger)
+    public function __construct(Client $client, Logger $logger, Proxy $proxy)
     {
         $this->client = $client;
         $this->logger = $logger;
+        $this->proxy = $proxy;
     }
 
     public function testAndSave(Proxy $proxy): bool
@@ -44,6 +46,8 @@ class LumTest implements TesterInterface
 
     public function testAndSaveBatch(Collection $proxies)
     {
+        $proxies = $this->proxy->whereIn('id', $proxies)->get();
+
         $requests = function ($proxies) {
             for ($i = 0; $i < count($proxies); $i++) {
                 yield function () use ($proxies, $i) {

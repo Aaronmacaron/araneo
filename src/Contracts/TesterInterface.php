@@ -3,8 +3,7 @@
 namespace Araneo\Contracts;
 
 use App\Proxy;
-use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Support\Collection;
 
 interface TesterInterface
 {

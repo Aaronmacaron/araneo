@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use Illuminate\Database\Eloquent\Collection;
+use \Illuminate\Support\Collection;
 use Illuminate\Log\Logger;
 
 class ProxyCheckJob extends Job
