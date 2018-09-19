@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
         Commands\Crawler\FreeProxyListCommand::class,
         Commands\Crawler\GetProxyListCommand::class,
         Commands\Crawler\GimmeProxyCommand::class,
+        Commands\ImportCommand::class,
         Commands\PurgeCommand::class,
         Commands\Test\IPApiTestCommand::class,
         Commands\Test\LumTestCommand::class,
