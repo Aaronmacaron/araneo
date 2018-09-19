@@ -34,7 +34,10 @@ class AraneoPageImportJob extends Job
         $proxies = json_decode($request->getBody())->data;
 
         foreach ($proxies as $row) {
-            $proxy->create((array) $row);
+            $proxy->updateOrCreate(
+                ['ip_address' => $row->ip_address],
+                (array) $row
+            );
         }
 
         $logger->info('Importing Araneo page is done', [
