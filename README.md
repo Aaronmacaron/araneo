@@ -1,4 +1,4 @@
-# Araneo - Your Own Random Proxy endpoint
+# Araneo - Your Own Random Proxy Endpoint
 
 Areneo is a microservice written in PHP that crawls, indexes and monitors proxies.
 
@@ -23,7 +23,7 @@ Araneo has only two endpoints, both have the same parameters.
 | last_status | Search by last status, you can use `failed` and `working` | 
 | last_worked_at | Search by datetime, you can use some smart query here | 
 | port | Search by port (you can use some smart query here) |
-| protocol | Search by protocol. Eg socks5 |
+| protocol | Search by protocol. E.g. socks5 |
 | proxy_source | Search proxies by source |
 | supports_cookies | Search proxies that supports cookies, you can use boolean values |
 | supports_custom_headers | Search proxies that supports custom headers, you can use boolean values |
@@ -140,7 +140,7 @@ You can run a worker with `php artisan queue:work --sleep=3 --tries=3 --daemon -
 
 ## Idempotency feature
 
-## How health check is done
+## How health checking is done
 
 To be added.
 
