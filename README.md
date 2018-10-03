@@ -1,12 +1,12 @@
-# Araneo, your own random proxy endpoint.
+# Araneo - Your Own Random Proxy endpoint
 
-Areneo is a microservice written in PHP that crawl, index and monitor proxies.
+Areneo is a microservice written in PHP that crawls, indexes and monitors proxies.
 
-* Algorithm to keep proxies monitored and flag them as healthy or unhealthy;
-* Proxy crawler from multiples data sources;
-* [Idempotency feature][1] for easier proxy sticking within sessions;
-* Random proxy endpoint with query interface;
-* REST API.
+* Algorithm to keep proxies monitored and flag them as healthy or unhealthy
+* Proxy crawler from multiples data sources
+* [Idempotency feature][1] for easier proxy sticking within sessions
+* Random proxy endpoint with query interface
+* Provides REST API
 
 ## REST API
 
@@ -35,7 +35,7 @@ Araneo has only two endpoints, both have the same parameters.
 
 ### 1.`GET /proxy`
 
-Returns a single proxy and have a [idempotency feature][1].
+Returns a single proxy and has a [idempotency feature][1].
 
 #### Response
 
@@ -111,14 +111,14 @@ Returns a list of proxies.
 }
 ```
 
-## Running
+## Setup
 
 ### Requirements
 
-- PHP 7.1 or later;
-- HTTP server with PHP support (eg: Apache, Nginx, Caddy);
-- Composer;
-- A supported database: PostgreSQL.
+- PHP 7.1 or later
+- HTTP server with PHP support (E.g. Apache, Nginx, Caddy)
+- Composer
+- A supported database: PostgreSQL
 
 ### Schedules
 
@@ -126,7 +126,7 @@ Araneo uses schedules to monitor and crawl proxies.
 
 | Cron | Command | Description  
 |------|---------|------------|  
-| 0 * * * * | php artisan araneo:purge 24 | Purge unhealthy proxies rom database. |  
+| 0 * * * * | php artisan araneo:purge 24 | Purge unhealthy proxies from database. |  
 | * * * * * | php artisan araneo:crawler:gimmeproxy 10 | Dispatch 10 requests against GimmeProxy asking for proxy. |  
 | * * * * * | php artisan araneo:crawler:getproxylist 10 | Dispatch 10 requests against GetProxyList asking for proxy. |  
 | * * * * * | php artisan araneo:crawler:freeproxylist | Dispatch 10 requests against FreeProxyList asking for proxy. |  
